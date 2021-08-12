@@ -1,0 +1,2 @@
+This is a simple web-application like a maybe Twitter. It was written with using Spring MVC, Database: MySQL(MariaDB).
+The main purpose of writing this application is learning, training and experience in development.
