@@ -1,8 +1,7 @@
-package pl.sukhina.sweater;
+package pl.sukhina.sweater.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,25 +13,23 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @Controller
-public class GreetingController {
+public class MainController {
 
     final MessageRepository messageRepository;
 
-    @GetMapping("/greeting")
-    public String greeting (@RequestParam(name = "name", required = false,
-            defaultValue = "World") String name, Map<String, Object> model) {
-        model.put("name", name);
+    @GetMapping
+    public String greeting  (Map<String, Object> model) {
         return "greeting";
     }
 
-    @GetMapping
+    @GetMapping("/main")
     public String main(Map<String, Object> model) {
         var messages = messageRepository.findAll();
         model.put("messages", messages);
         return "main";
     }
 
-    @PostMapping
+    @PostMapping("/main")
     public String sendMessage(@RequestParam String text,
                               @RequestParam String tag,
                               Map<String, Object> model) {
