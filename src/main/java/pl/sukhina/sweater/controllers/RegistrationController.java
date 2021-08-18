@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.sukhina.sweater.models.Role;
 import pl.sukhina.sweater.models.User;
-import pl.sukhina.sweater.repositories.UserRepository;
+import pl.sukhina.sweater.services.user.UserService;
 
 import java.util.Collections;
 import java.util.Map;
@@ -17,7 +17,7 @@ import java.util.Map;
 @RequestMapping("/registration")
 public class RegistrationController {
 
-    final UserRepository userRepository;
+    final UserService userService;
 
     @GetMapping
     public String registration() {
@@ -26,14 +26,14 @@ public class RegistrationController {
 
     @PostMapping
     public String addUser(User user, Map<String, Object> model) {
-        var foundUser = userRepository.findUserByUsername(user.getUsername());
+        var foundUser = userService.findUserByUsername(user.getUsername());
         if (foundUser != null) {
             model.put("message", "User exists!");
             return "registration";
         }
         user.setActive(true);
         user.setRoles(Collections.singletonList(Role.USER));
-        userRepository.save(user);
+        userService.createUser(user);
         return "redirect:/login";
     }
 }
