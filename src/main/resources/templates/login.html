@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{parts/header.html :: header}"></head>
+<body>
+    <div th:if="${param.error}">Check username or password!</div>
+    <div th:if="${param.logout}">You are logged out!</div>
+    <form th:insert="~{parts/loginForm.html :: logimForm}" th:action="@{/login}" method="post"></form>
+    <a href="/registration">Sign on</a>
+</body>
+</html>
+
+

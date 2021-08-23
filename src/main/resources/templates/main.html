@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{parts/header.html :: header}"></head>
+<body>
+<div>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+    <a href="/user">User List</a>
+</div>
+<div>
+    <form method="post" action="/main">
+        <input name="text" placeholder="Write your message" />
+        <input name="tag" placeholder="Tag" />
+        <button type="submit">Send message</button>
+    </form>
+</div>
+<div>Message List</div>
+<form method="get" action="/main">
+    <input name="filter" placeholder="Search messages by tags" th:value="${filter}"/>
+    <button type="submit">Search</button>
+</form>
+<div th:unless="${messages.isEmpty()}" th:each="message: ${messages}">
+    <b th:text="${message.getId()}"></b>
+    <span th:text="${message.getText()}"></span>
+    <i th:text="${message.getTag()}"></i>
+    <strong th:text="${message.getAuthorName()}"></strong>
+</div>
+<div th:if="${messages.isEmpty()}">
+    <p>No Messages</p>
+</div>
+</body>
+</html>
+
+

@@ -5,8 +5,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import pl.sukhina.sweater.models.User;
 import pl.sukhina.sweater.repositories.UserRepository;
-import pl.sukhina.sweater.services.user.UserService;
-
 import java.util.List;
 
 @Primary

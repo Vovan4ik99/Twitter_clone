@@ -1,12 +1,14 @@
 package pl.sukhina.sweater.services.message;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import pl.sukhina.sweater.models.Message;
 import pl.sukhina.sweater.repositories.MessageRepository;
 
 import java.util.List;
 
+@Primary
 @RequiredArgsConstructor
 @Service
 public class MessageServiceImpl implements MessageService {

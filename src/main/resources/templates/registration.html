@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{parts/header.html :: header}"></head>
+<body>
+  <div>
+    <p>Add new User
+    <div th:text="${message}"></div>
+    <form th:insert="~{parts/loginForm.html :: logimForm}" th:action="@{/registration}" method="post"></form>
+  </div>
+</body>
+</html>
+

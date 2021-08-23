@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{parts/header.html :: header}"></head>
+<body>
+<div>List of users</div>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Role</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody th:each="user: ${users}">
+    <td th:text="${user.getUsername()}"></td>
+    <td th:each="userrole: ${user.getRoles()}"><span th:text="${userrole.getAuthority()}"></span></td>
+    <td><a th:href="'/user/' + ${user.getId()}">Edit user</a></td>
+    </tbody>
+</table>
+</body>
+</html>
