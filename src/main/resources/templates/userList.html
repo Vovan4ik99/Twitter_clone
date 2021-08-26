@@ -2,6 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:insert="~{parts/header.html :: header}"></head>
 <body>
+<nav th:insert="parts/navbar.html :: navbar"></nav>
+<div class="container">
 <div>List of users</div>
 <table>
     <thead>
@@ -17,5 +19,7 @@
     <td><a th:href="'/user/' + ${user.getId()}">Edit user</a></td>
     </tbody>
 </table>
+</div>
+<div th:insert="~{parts/footer.html :: footer}"></div>
 </body>
 </html>

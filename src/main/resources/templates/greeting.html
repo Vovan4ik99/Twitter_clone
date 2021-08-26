@@ -2,8 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:insert="~{parts/header.html :: header}"></head>
 <body>
-<div>Hello, user</div>
-<a href="/main">Main page</a>
+<nav th:insert="parts/navbar.html :: navbar"></nav>
+<div class="container mt-5">
+    <h5>Hello user!</h5>
+</div>
+<div th:insert="~{parts/footer.html :: footer}"></div>
 </body>
 </html>
 
