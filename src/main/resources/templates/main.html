@@ -3,38 +3,51 @@
 <head th:insert="~{parts/header.html :: header}"></head>
 <body>
 <nav th:insert="parts/navbar.html :: navbar"></nav>
-<div class="container">
-<div>
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Sign Out"/>
+<div class="container mt-5">
+    <form class="row row-cols-lg-auto g-3 align-items-center mb-3" method="get" th:action="@{/main}">
+        <div class="col-12">
+            <input class="form-control" name="filter" placeholder="Search messages by tags" th:value="${filter}"/>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-secondary" type="submit">Search</button>
+        </div>
     </form>
-    <a href="/user">User List</a>
-</div>
-<div>
-    <form method="post" th:action="@{/main}" enctype="multipart/form-data">
-        <input name="text" placeholder="Write your message" />
-        <input name="tag" placeholder="Tag" />
-        <input type="file" name="file">
-        <button type="submit">Send message</button>
-    </form>
-</div>
-<div>Message List</div>
-<form method="get" th:action="@{/main}">
-    <input name="filter" placeholder="Search messages by tags" th:value="${filter}"/>
-    <button type="submit">Search</button>
-</form>
-<div th:unless="${messages.isEmpty()}" th:each="message: ${messages}">
-    <b th:text="${message.getId()}"></b>
-    <span th:text="${message.getText()}"></span>
-    <i th:text="${message.getTag()}"></i>
-    <strong th:text="${message.getAuthorName()}"></strong>
-    <div th:if="${message.filename}">
-        <img th:src="@{/img/{filename}(filename = ${message.filename})}">
+    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+        Add new message
+    </a>
+    <div class="collapse" id="collapseExample">
+        <div class="mb-3 mt-3">
+            <form method="post" th:action="@{/main}" enctype="multipart/form-data">
+                <div class="input-group mb-3">
+                    <input class="form-control" name="text" placeholder="Write your message" />
+                </div>
+                <div class="input-group mb-3">
+                    <input class="form-control" name="tag" placeholder="Tag" />
+                </div>
+                <div class="input-group mb-3">
+                    <input class="form-control" type="file" name="file" id="formFile">
+                </div>
+                <button class="btn btn-success" type="submit">Send message</button>
+            </form>
+        </div>
     </div>
-</div>
-<div th:if="${messages.isEmpty()}">
-    <p>No Messages</p>
-</div>
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        <div class="col" th:unless="${messages.isEmpty()}" th:each="message: ${messages}">
+            <div class="card" th:if="${message.filename}">
+                <img class="card-img-top" th:src="@{/img/{filename}(filename = ${message.filename})}">
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Tag: <strong th:text="${message.getTag()}"></strong> </h5>
+                <p class="card-text" th:text="${message.getText()}"></p>
+                <div class="card-footer">
+                    <p>Author: <strong th:text="${message.getAuthorName()}"></strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:if="${messages.isEmpty()}">
+        <p>No Messages</p>
+    </div>
 </div>
 <div th:insert="~{parts/footer.html :: footer}"></div>
 </body>

@@ -1,3 +1,7 @@
 body {
     color: #114;
 }
+.logout-form {
+    display: block;
+    margin-left: 15px;
+}

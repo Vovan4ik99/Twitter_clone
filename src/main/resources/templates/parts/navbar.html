@@ -1,4 +1,5 @@
-<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-light bg-light"
+     xmlns:sec="http://www.w3.org/1999/xhtml">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">Sweater</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,10 +13,18 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/main">Messages</a>
                 </li>
-                <li class="nav-item">
+                <li sec:authorize="hasAuthority('ADMIN')" class="nav-item">
                     <a class="nav-link" href="/user">User list</a>
                 </li>
             </ul>
-        </div>
+
+            <div class="navbar-text" sec:authorize="isAuthenticated()">
+                <span sec:authentication="name"></span></div>
+            </div>
+            <div class="navbar-text" sec:authorize="isAnonymous()">"Unknown user"</div>
+            <form class="logout-form" th:action="@{/logout}" method="post">
+                <button class="btn btn-danger" type="submit">Sign Out!</button>
+            </form>
+
     </div>
 </nav>

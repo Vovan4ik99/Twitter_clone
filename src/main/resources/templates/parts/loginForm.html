@@ -1,6 +1,25 @@
 
-    <form th:fragment="logimForm">
-        <div><label> User Name: <input name="username"/></label></div>
-        <div><label> Password: <input type="password" name="password"/></label></div>
-        <div><input type="submit" value="Sign in"/></div>
+    <form th:fragment="loginForm" method="post" th:action="${url}">
+        <div class="form-group row mt-3">
+            <label class="col-sm-2 col-form-label"> User Name: </label>
+            <div class="col-sm-6">
+                <input class="form-control" name="username" placeholder="Username"/>
+            </div>
+        </div>
+        <div class="form-group row mt-3">
+            <label class="col-sm-2 col-form-label"> Password: </label>
+            <div class="col-sm-6">
+                <input class="form-control" type="password" name="password" placeholder="Password"/>
+            </div>
+        </div>
+        <div th:if="${isRegisterForm}" class="form-group row mt-3">
+            <label class="col-sm-2 col-form-label"> Email: </label>
+            <div class="col-sm-6">
+                <input class="form-control" type="email" name="password" placeholder="some@some.com"/>
+            </div>
+        </div>
+            <button th:text="${isRegisterForm} ? 'Register me!' : 'Sign in!'" class="btn btn-primary mt-3 mb-3" type="submit"></button>
+        <div th:unless="${isRegisterForm}">
+            <a href="/registration">Sign on</a>
+        </div>
     </form>

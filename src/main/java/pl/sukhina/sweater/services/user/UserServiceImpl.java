@@ -3,8 +3,11 @@ package pl.sukhina.sweater.services.user;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import pl.sukhina.sweater.models.Role;
 import pl.sukhina.sweater.models.User;
 import pl.sukhina.sweater.repositories.UserRepository;
+
+import java.util.Collections;
 import java.util.List;
 
 @Primary
@@ -26,7 +29,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
-        return userRepository.save(user);
+        var foundUser = userRepository.findUserByUsername(user.getUsername());
+        if (foundUser != null) {
+            return null;
+        }
+        user.setActive(true);
+        user.setRoles(Collections.singletonList(Role.USER));
+        userRepository.save(user);
+        return user;
     }
 
     @Override

@@ -2,11 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:insert="~{parts/header.html :: header}"></head>
 <body>
-<div class="container">
+<nav th:insert="parts/navbar.html :: navbar"></nav>
+<div class="container mt-5">
     <div th:if="${param.error}">Check username or password!</div>
     <div th:if="${param.logout}">You are logged out!</div>
-    <form th:insert="~{parts/loginForm.html :: logimForm}" th:action="@{/login}" method="post"></form>
-    <a href="/registration">Sign on</a>
+    <form th:replace="~{parts/loginForm.html :: loginForm(isRegisterForm = 'false', url = @{/login})}"></form>
 </div>
     <div th:insert="~{parts/footer.html :: footer}"></div>
 </body>

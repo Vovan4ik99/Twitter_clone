@@ -3,7 +3,7 @@
 <head th:insert="~{parts/header.html :: header}"></head>
 <body>
 <nav th:insert="parts/navbar.html :: navbar"></nav>
-<div class="container">
+<div class="container mt-5">
     <div>Edit user</div>
     <form th:action="@{/user}" method="post">
       <input name="username" th:value="${user.getUsername()}">
