@@ -7,4 +7,6 @@ import pl.sukhina.sweater.models.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     User findUserByUsername(String username);
+
+    User findUserByActivationCode(String code);
 }

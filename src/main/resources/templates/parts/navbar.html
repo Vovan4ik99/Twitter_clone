@@ -18,13 +18,11 @@
                 </li>
             </ul>
 
-            <div class="navbar-text" sec:authorize="isAuthenticated()">
-                <span sec:authentication="name"></span></div>
-            </div>
-            <div class="navbar-text" sec:authorize="isAnonymous()">"Unknown user"</div>
-            <form class="logout-form" th:action="@{/logout}" method="post">
-                <button class="btn btn-danger" type="submit">Sign Out!</button>
+            <div class="navbar-text me-3" th:text="${#authorization.expression('isAuthenticated()') ? #authentication.getName() : 'Unknown user'}"></div>
+            <form sec:authorize="isAuthenticated()" class="logout-form" th:action="@{/logout}" method="post">
+                <button class="btn btn-danger" type="submit">Sign out!</button>
             </form>
-
+            <a sec:authorize="isAnonymous()" class="btn btn-info" href="/login">Sign in!</a>
+        </div>
     </div>
 </nav>

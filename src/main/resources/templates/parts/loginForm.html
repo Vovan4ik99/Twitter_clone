@@ -15,7 +15,7 @@
         <div th:if="${isRegisterForm}" class="form-group row mt-3">
             <label class="col-sm-2 col-form-label"> Email: </label>
             <div class="col-sm-6">
-                <input class="form-control" type="email" name="password" placeholder="some@some.com"/>
+                <input class="form-control" type="email" name="email" placeholder="some@some.com"/>
             </div>
         </div>
             <button th:text="${isRegisterForm} ? 'Register me!' : 'Sign in!'" class="btn btn-primary mt-3 mb-3" type="submit"></button>

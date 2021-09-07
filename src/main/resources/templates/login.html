@@ -6,6 +6,7 @@
 <div class="container mt-5">
     <div th:if="${param.error}">Check username or password!</div>
     <div th:if="${param.logout}">You are logged out!</div>
+    <div th:text="${message}"></div>
     <form th:replace="~{parts/loginForm.html :: loginForm(isRegisterForm = 'false', url = @{/login})}"></form>
 </div>
     <div th:insert="~{parts/footer.html :: footer}"></div>

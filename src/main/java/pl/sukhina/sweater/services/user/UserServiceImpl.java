@@ -6,9 +6,11 @@ import org.springframework.stereotype.Service;
 import pl.sukhina.sweater.models.Role;
 import pl.sukhina.sweater.models.User;
 import pl.sukhina.sweater.repositories.UserRepository;
+import pl.sukhina.sweater.services.MailSender;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 @Primary
 @RequiredArgsConstructor
@@ -16,6 +18,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     final UserRepository userRepository;
+
+    final MailSender mailSender;
 
     @Override
     public List<User> getUsers() {
@@ -35,7 +39,19 @@ public class UserServiceImpl implements UserService {
         }
         user.setActive(true);
         user.setRoles(Collections.singletonList(Role.USER));
+        user.setActivationCode(UUID.randomUUID().toString());
         userRepository.save(user);
+
+        if (!user.getEmail().isEmpty()) {
+            String message = String.format(
+                    "Hello, %s! \n" +
+                            "Welcome to this app! Please, visit this link: http://localhost:8080/registration/activate/%s",
+                    user.getUsername(),
+                    user.getActivationCode()
+            );
+            mailSender.sendMail(user.getEmail(), "Activation code", message);
+        }
+
         return user;
     }
 
@@ -55,5 +71,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserByUsername(String username) {
         return userRepository.findUserByUsername(username);
+    }
+
+    @Override
+    public boolean activateUser(String code) {
+        var foundUser = userRepository.findUserByActivationCode(code);
+        if (foundUser == null) {
+            return false;
+        }
+        foundUser.setActivationCode(null);
+        userRepository.save(foundUser);
+        return true;
     }
 }
