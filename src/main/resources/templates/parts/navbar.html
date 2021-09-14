@@ -16,6 +16,9 @@
                 <li sec:authorize="hasAuthority('ADMIN')" class="nav-item">
                     <a class="nav-link" href="/user">User list</a>
                 </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item">
+                    <a class="nav-link" href="/user/profile">Profile</a>
+                </li>
             </ul>
 
             <div class="navbar-text me-3" th:text="${#authorization.expression('isAuthenticated()') ? #authentication.getName() : 'Unknown user'}"></div>

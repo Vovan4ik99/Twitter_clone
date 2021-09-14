@@ -45,8 +45,8 @@
             </div>
         </div>
     </div>
-    <div th:if="${messages.isEmpty()}">
-        <p>No Messages</p>
+    <div class="mt-5" th:if="${messages.isEmpty()}">
+        <p class="text-center text-primary">No Messages</p>
     </div>
 </div>
 <div th:insert="~{parts/footer.html :: footer}"></div>

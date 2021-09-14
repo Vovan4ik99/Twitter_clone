@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{parts/header.html :: header}"></head>
+<body>
+<nav th:insert="parts/navbar.html :: navbar"></nav>
+<div class="container mt-5">
+  <h5 th:text="${user.getUsername()}"></h5>
+<!--  <div th:text="${message}"></div>-->
+  <form method="post" th:action="@{/user/profile}">
+    <div class="form-group row mt-3">
+      <label class="col-sm-2 col-form-label"> Password: </label>
+      <div class="col-sm-6">
+        <input class="form-control" type="password" name="password" placeholder="Password"/>
+      </div>
+    </div>
+    <div class="form-group row mt-3">
+      <label class="col-sm-2 col-form-label"> Email: </label>
+      <div class="col-sm-6">
+        <input class="form-control" type="email" name="email" placeholder="some@some.com" th:value="${user.getEmail() ?: ''}"/>
+      </div>
+    </div>
+    <button class="btn btn-primary mt-3 mb-3" type="submit">Save</button>
+  </form>
+</div>
+<div th:insert="~{parts/footer.html :: footer}"></div>
+</body>
+</html>

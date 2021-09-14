@@ -8,9 +8,8 @@ import pl.sukhina.sweater.models.User;
 import pl.sukhina.sweater.repositories.UserRepository;
 import pl.sukhina.sweater.services.MailSender;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Primary
 @RequiredArgsConstructor
@@ -42,6 +41,12 @@ public class UserServiceImpl implements UserService {
         user.setActivationCode(UUID.randomUUID().toString());
         userRepository.save(user);
 
+        sendActivationCode(user);
+
+        return user;
+    }
+
+    private void sendActivationCode(User user) {
         if (!user.getEmail().isEmpty()) {
             String message = String.format(
                     "Hello, %s! \n" +
@@ -51,13 +56,32 @@ public class UserServiceImpl implements UserService {
             );
             mailSender.sendMail(user.getEmail(), "Activation code", message);
         }
+    }
 
-        return user;
+    public User updateUser(User user, String username, Map<String, String> form) {
+        user.setId(user.getId());
+        user.setUsername(username);
+        List<String> roles = Arrays.stream(Role.values()).map(Role::name).collect(Collectors.toList());
+        user.getRoles().clear();
+        for (String key: form.keySet()) {
+            if (roles.contains(key)) {
+                user.getRoles().add(Role.valueOf(key));
+            }
+        }
+        return userRepository.save(user);
     }
 
     @Override
-    public User updateUser(User user, Long id) {
-        user.setId(id);
+    public User updateUserProfile(User user, String password, String email) {
+        String userEmail = user.getEmail();
+        if (email != null && !email.isEmpty() && !email.equals(userEmail) || (userEmail != null && !userEmail.equals(email))) {
+            user.setEmail(email);
+            user.setActivationCode(UUID.randomUUID().toString());
+            sendActivationCode(user);
+        }
+        if (!password.isEmpty()) {
+            user.setPassword(password);
+        }
         return userRepository.save(user);
     }
 
