@@ -1,7 +1,9 @@
 package pl.sukhina.sweater.services.user;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.sukhina.sweater.models.Role;
 import pl.sukhina.sweater.models.User;
@@ -19,6 +21,8 @@ public class UserServiceImpl implements UserService {
     final UserRepository userRepository;
 
     final MailSender mailSender;
+
+    final PasswordEncoder passwordEncoder;
 
     @Override
     public List<User> getUsers() {
@@ -39,6 +43,7 @@ public class UserServiceImpl implements UserService {
         user.setActive(true);
         user.setRoles(Collections.singletonList(Role.USER));
         user.setActivationCode(UUID.randomUUID().toString());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
 
         sendActivationCode(user);
@@ -80,7 +85,7 @@ public class UserServiceImpl implements UserService {
             sendActivationCode(user);
         }
         if (!password.isEmpty()) {
-            user.setPassword(password);
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
         return userRepository.save(user);
     }

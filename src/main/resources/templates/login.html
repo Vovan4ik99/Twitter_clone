@@ -4,9 +4,13 @@
 <body>
 <nav th:insert="parts/navbar.html :: navbar"></nav>
 <div class="container mt-5">
-    <div th:if="${param.error}">Check username or password!</div>
-    <div th:if="${param.logout}">You are logged out!</div>
-    <div th:text="${message}"></div>
+    <div class="text-danger" th:if="${param.error}">Check username or password!</div>
+    <div class="text-success" th:if="${param.logout}">You are logged out!</div>
+    <div class="alert alert-danger" th:if="${param.error}"
+         th:with="errorMsg=${session['SPRING_SECURITY_LAST_EXCEPTION'].message}">
+        Reason: <span th:text="${errorMsg}"></span>
+    </div>
+    <div class="alert" th:text="${message}" th:classappend="${messageType}"></div>
     <form th:replace="~{parts/loginForm.html :: loginForm(isRegisterForm = 'false', url = @{/login})}"></form>
 </div>
     <div th:insert="~{parts/footer.html :: footer}"></div>

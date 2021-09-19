@@ -15,14 +15,18 @@
     <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
         Add new message
     </a>
-    <div class="collapse" id="collapseExample">
+    <div class="collapse" th:classappend="${message} ? show : ''" id="collapseExample">
         <div class="mb-3 mt-3">
             <form method="post" th:action="@{/main}" enctype="multipart/form-data">
                 <div class="input-group mb-3">
-                    <input class="form-control" name="text" placeholder="Write your message" />
+                    <input class="form-control" th:classappend="${textError} ? is-invalid : ''" name="text"
+                           placeholder="Write your message" th:value="${message} ? ${message.text} : ''"/>
+                    <div th:text="${textError}" class="invalid-feedback"></div>
                 </div>
                 <div class="input-group mb-3">
-                    <input class="form-control" name="tag" placeholder="Tag" />
+                    <input class="form-control" th:classappend="${tagError} ? is-invalid : ''" name="tag"
+                           placeholder="Tag"  th:value="${message} ? ${message.tag} : ''"/>
+                    <div th:text="${tagError}" class="invalid-feedback"></div>
                 </div>
                 <div class="input-group mb-3">
                     <input class="form-control" type="file" name="file" id="formFile">

@@ -5,8 +5,7 @@
 <nav th:insert="parts/navbar.html :: navbar"></nav>
 <div class="container mt-5">
   <div>
-    <p>Add new User
-    <div th:text="${message}"></div>
+    <p>Add new User</p>
     <form th:replace="~{parts/loginForm.html :: loginForm(isRegisterForm='true', url = @{/registration})}"></form>
   </div>
 </div>

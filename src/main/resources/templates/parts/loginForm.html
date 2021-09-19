@@ -3,19 +3,33 @@
         <div class="form-group row mt-3">
             <label class="col-sm-2 col-form-label"> User Name: </label>
             <div class="col-sm-6">
-                <input class="form-control" name="username" placeholder="Username"/>
+                <input class="form-control" th:classappend="${usernameError} ? is-invalid : ''" name="username"
+                       placeholder="Username" th:value="${user} ? ${user.getUsername()} : ''"/>
+                <div th:text="${usernameError}" class="invalid-feedback"></div>
             </div>
         </div>
         <div class="form-group row mt-3">
             <label class="col-sm-2 col-form-label"> Password: </label>
             <div class="col-sm-6">
-                <input class="form-control" type="password" name="password" placeholder="Password"/>
+                <input class="form-control" type="password" th:classappend="${passwordError} ? is-invalid : ''"
+                       name="password" placeholder="Password"/>
+                <div th:text="${passwordError}" class="invalid-feedback"></div>
+            </div>
+        </div>
+        <div th:if="${isRegisterForm}" class="form-group row mt-3">
+            <label class="col-sm-2 col-form-label"> Password confirm: </label>
+            <div class="col-sm-6">
+                <input class="form-control" type="password" th:classappend="${passwordConfirmationError} ? is-invalid : ''"
+                       name="passwordConfirmation" placeholder="Confirm your password"/>
+                <div th:text="${passwordConfirmationError}" class="invalid-feedback"></div>
             </div>
         </div>
         <div th:if="${isRegisterForm}" class="form-group row mt-3">
             <label class="col-sm-2 col-form-label"> Email: </label>
             <div class="col-sm-6">
-                <input class="form-control" type="email" name="email" placeholder="some@some.com"/>
+                <input class="form-control" th:classappend="${emailError} ? is-invalid : ''" type="email"
+                       th:value="${user} ? ${user.getEmail()} : ''" name="email" placeholder="some@some.com"/>
+                <div th:text="${emailError}" class="invalid-feedback"></div>
             </div>
         </div>
             <button th:text="${isRegisterForm} ? 'Register me!' : 'Sign in!'" class="btn btn-primary mt-3 mb-3" type="submit"></button>
